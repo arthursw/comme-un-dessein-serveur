@@ -127,6 +127,11 @@ Update IDs:
 
 https://console.developers.google.com/
 
+## Create drawings directory
+
+Create the directory comme-un-dessein-server/CommeUnDessein/CommeUnDessein/static/drawings/
+where the images (.png and .svg) will be saved, otherwise the server won't find the path and throw an error.
+
 ## Note to fix websocket
 
 A bug in gevent can be fixed by reinstalling gevent version 1.1b4
@@ -160,3 +165,6 @@ The goal is to run `python run.py` so that it does not stop when leaving ssh ses
 You can clone the repo multiple times on the server to manage different users.
 Just keep in mind that static files will always be served from the same repo, so pulling and using `collectstatic` will have effect only on the served files.
 
+## SSL config - Let's Encrypt
+
+SSL config https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04
