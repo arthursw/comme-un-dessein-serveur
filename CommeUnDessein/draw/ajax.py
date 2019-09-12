@@ -4176,3 +4176,118 @@ def loadSite(request, siteName):
 	except:
 		return { 'state': 'error', 'message': 'Site ' + siteName + ' does not exist.' }
 	return { 'state': 'success', 'box': site.box.to_json(), 'site': site.to_json() }
+
+def exportDB(path):
+
+	users = UserProfile.objects.to_json()
+	file = open(path + 'users.json', 'w+')
+	file.write(users)
+	file.close()
+
+	cities = City.objects(name__in=['festival-maintenant', 'nantes-maker-campus', 'safra-numeriques', 'tech-inn-vitre']).to_json()
+	file = open(path + 'cities.json', 'w+')
+	file.write(cities)
+	file.close()
+
+	votes = Vote.objects.to_json()
+	file = open(path + 'votes.json', 'w+')
+	file.write(votes)
+	file.close()
+
+	comments = Comment.objects.to_json()
+	file = open(path + 'comments.json', 'w+')
+	file.write(comments)
+	file.close()
+
+	drawings = Drawing.objects.to_json()
+	file = open(path + 'drawings.json', 'w+')
+	file.write(drawings)
+	file.close()
+
+	return
+
+def projectToGeoJSON2(city, bounds):
+	x = 360 * bounds['x'] / float(city.width)
+	y = 180 * bounds['y'] / float(city.height)
+	width = 360 * bounds['width'] / float(city.width)
+	height = 180 * bounds['height'] / float(city.height)
+	x = min(max(x, -180), 180)
+	y = min(max(y, -90), 90)
+	if x + width > 180:
+		width = 180 - x
+	if y + height > 90:
+		height = 90 - y
+	return { 'x': x, 'y': y, 'width': width, 'height': height }
+
+def makeBox2(left, top, right, bottom):
+	return { "type": "Polygon", "coordinates": [ [ [left, top], [right, top], [right, bottom], [left, bottom], [left, top] ] ] }
+
+def makeBoxFromBounds2(city, bounds):
+	bounds = projectToGeoJSON2(city, bounds)
+	return makeBox2(bounds['x'], bounds['y'], bounds['x'] + bounds['width'], bounds['y'] + bounds['height'])
+
+
+def importDB():
+
+	file = open(path + 'users.json', 'r')
+	users = file.read()
+	userso = UserProfile.from_json(users)
+	userso.save(force_insert=True)
+
+	file = open(path + 'cities.json', 'r')
+	cities = file.read()
+	citieso = City.from_json(cities)
+	citieso.save(force_insert=True)
+
+	file = open(path + 'votes.json', 'r')
+	votes = file.read()
+	voteso = Votes.from_json(votes)
+	voteso.save(force_insert=True)
+
+	file = open(path + 'comments.json', 'r')
+	comments = file.read()
+	commentso = Comments.from_json(comments)
+	commentso.save(force_insert=True)
+
+
+	file = open(path + 'drawings.json', 'r')
+	drawings = json.loads(file.read())
+	for drawing in drawings:
+		city = City.objects.get(pk=drawing.city)
+		drawing.previousStatus = 'unknown'
+		del drawing['bounds']
+		xMin = None
+		xMax = None
+		yMin = None
+		yMax = None
+		pathList = json.loads(drawing.pathList)
+		newPathList = []
+		for path in pathList:
+			# for point in path['points']:
+			points = path['points']
+			for i in range(0, len(points), 4):
+				if xMin == None or xMin > points[i]['x']:
+					xMin = points[i]['x']
+				if xMax == None or xMax < points[i]['x']:
+					xMax = points[i]['x']
+				
+				if yMin == None or yMin > points[i]['y']:
+					yMin = points[i]['y']
+				if yMax == None or yMax < points[i]['y']:
+					yMax = points[i]['y']
+
+			newPathList.append({'points': points, 'data': { 'strokeColor': 'black' } })
+
+		drawing.pathList = json.dumps(newPathList)
+
+		xMin *= 1000
+		yMin *= 1000
+		xMax *= 1000
+		yMax *= 1000
+
+		drawing.box = makeBoxFromBounds2(city, {'x': xMin, 'y': yMin, 'width': xMax-xMin, 'height': yMax-yMin})
+
+		do = Drawing.from_json(json.dumps(drawing))
+		do.save(force_insert=True)
+
+	return

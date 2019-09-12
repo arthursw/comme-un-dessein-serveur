@@ -82,7 +82,7 @@ class Drawing(Document):
     rType = StringField(default='Drawing')
     owner = StringField(required=True)
     status = StringField(default='draft', required=True)
-    paths = ListField(ReferenceField('Path'))
+    paths = ListField(ReferenceField('Path')) # UNUSED, to be deleted (but error when delete?)
     svg = StringField()
     pathList = ListField(StringField())
     bounds = StringField()
