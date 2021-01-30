@@ -1,6 +1,6 @@
 # --- CommeUnDessein --- #
 
-CommeUnDessein is a collaborative app.
+CommeUnDessein/Espero are collaborative apps.
 
 # development
 
