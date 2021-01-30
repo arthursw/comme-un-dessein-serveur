@@ -17,7 +17,13 @@ import json
 from mongoengine import *
 connect('CommeUnDessein')
 
-with open('/data/settings.json') as f:
+
+DATA_DIR = '/data'
+
+if not os.path.isdir(DATA_DIR):
+    DATA_DIR = os.path.expanduser('~/.root/data')
+    
+with open(DATA_DIR + '/settings.json') as f:
     localSettings = json.loads(f.read().strip())
 
 SITE_ID = localSettings['SITE_ID']
@@ -52,8 +58,9 @@ if DEBUG:
     STATICFILES_FINDERS = STATICFILES_FINDERS + ('draw.fileFinder.StaticRootFinder',)
 
 # Make this unique, and don't share it with anybody.
-with open('/data/secret_key.txt') as f:
+with open(DATA_DIR + '/secret_key.txt') as f:
     SECRET_KEY = f.read().strip()
+
 # SECRET_KEY = 'A unique secret key'
 # SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = '*(iy*i+rt4bq$bu9%3r0er8$01e^$gpv@jwljecm$96=ggb35='

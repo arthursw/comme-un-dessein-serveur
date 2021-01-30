@@ -64,7 +64,7 @@ include/
 CommeUnDessein/static/images/sources/
 CommeUnDessein/media/
 CommeUnDessein/js/*.map
-CommeUnDessein/static/libs/
+CommeUnDessein/static/libsBckp/
 CommeUnDessein/static/docs/
 CommeUnDessein/static/node_modules/
 CommeUnDessein/static/comme-un-dessein-client/

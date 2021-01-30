@@ -103,22 +103,22 @@ except City.DoesNotExist:
 
 logger = logging.getLogger(__name__)
 
-with open('/data/secret_github.txt') as f:
+with open(settings.DATA_DIR + '/secret_github.txt') as f:
 	PASSWORD = base64.b64decode(f.read().strip())
 
-with open('/data/secret_tipibot.txt') as f:
+with open(settings.DATA_DIR + '/secret_tipibot.txt') as f:
 	TIPIBOT_PASSWORD = f.read().strip()
 
-with open('/data/client_secret_github.txt') as f:
+with open(settings.DATA_DIR + '/client_secret_github.txt') as f:
 	CLIENT_SECRET = f.read().strip()
 
-with open('/data/accesstoken_github.txt') as f:
+with open(settings.DATA_DIR + '/accesstoken_github.txt') as f:
 	ACCESS_TOKEN = f.read().strip()
 
-with open('/data/openaccesstoken_github.txt') as f:
+with open(settings.DATA_DIR + '/openaccesstoken_github.txt') as f:
 	OPEN_ACCESS_TOKEN = f.read().strip()
 
-with open('/data/settings.json') as f:
+with open(settings.DATA_DIR + '/settings.json') as f:
     localSettings = json.loads(f.read().strip())
 
 # pprint(vars(object))

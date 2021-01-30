@@ -1,11 +1,9 @@
-cefpython3==57.0
 certifi==2017.4.17
 chardet==3.0.3
 Django==1.9.13
 django-allauth==0.32.0
 django-anymail==0.11.1
 django-cors-headers==2.1.0
-django-paypal==0.3.6
 gevent==1.1b4
 gevent-socketio==0.3.6
 gevent-websocket==0.10.1
