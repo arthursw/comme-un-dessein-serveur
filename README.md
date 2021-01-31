@@ -1,6 +1,6 @@
-# --- CommeUnDessein --- #
+# --- Wetu --- #
 
-CommeUnDessein/Espero are collaborative apps.
+Wetu is a collaborative app.
 
 # development
 
@@ -139,6 +139,10 @@ A bug in gevent can be fixed by reinstalling gevent version 1.1b4
 sudo pip uninstall gevent
 sudo pip install gevent==1.1b4
 
+## Run locally
+
+Use `python run.py` to make websocket working.
+
 ## Running in production
 
 activate your virtualenv with `source bin/activate`
@@ -168,3 +172,6 @@ Just keep in mind that static files will always be served from the same repo, so
 ## SSL config - Let's Encrypt
 
 SSL config https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-16-04
+# Notes
+
+In local settings, APPLICATION can be either "COMME_UN_DESSEIN" or "ESPERO".

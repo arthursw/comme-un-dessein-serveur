@@ -1,0 +1,33 @@
+{% extends "account/base.html" %}
+
+{% load static %}
+
+{% load i18n %}
+
+{% load account %}
+{% load socialaccount %}
+
+
+{% block head_title %}Créer un compte{% endblock %}
+
+
+{% block content %}
+
+<p>{{ Wetu.settings.APPLICATION }}</p>
+
+<form id="signup_form" class="form-signin signup" id="signup_form" method="post" action="{% url 'account_signup' %}" role="form">
+  {% csrf_token %}
+  {{ form.as_p }}
+  {% if redirect_field_value %}
+  <input type="hidden" class="form-control" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+
+  <button id="submit-signup" class="btn btn-lg" type="submit">Créer un compte</button>
+
+  {% include "account/social_account_buttons.html" %}  
+  
+</form>
+
+
+
+{% endblock %}

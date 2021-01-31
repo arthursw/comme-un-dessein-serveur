@@ -1,0 +1,36 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account %}
+
+{% block head_title %}Se connecter{% endblock %}
+
+{% block content %}
+
+
+<form id="login_form" class="login form-signin cd-show" method="POST" action="{% url 'account_login' %}" role="form">
+
+  {% csrf_token %}
+
+    {{ form.as_p }}
+
+  {% if redirect_field_value %}
+
+    <input type="hidden" class="form-control" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  
+  <button class="btn btn-lg btn-primary primaryAction" type="submit">Se connecter</button>
+
+  <div id="cd-form-footer" class="cd-column cd-center">
+    <a id="forgot-password" class="button secondaryAction" href="{% url 'account_reset_password' %}">Mot de passe oublié ?</a>
+    <a href="{% url 'account_signup' %}">Créer un compte</a>
+  </div>
+  
+
+  {% include "account/social_account_buttons.html" %}  
+
+</form>
+
+
+
+{% endblock %}

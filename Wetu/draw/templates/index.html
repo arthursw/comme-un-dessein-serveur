@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+{# --- allauth --- #}
+
+{% load i18n %}
+{% load account %}
+{% load socialaccount %}
+
+<html lang="en">
+  <head>
+
+    <base href="/">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"> -->
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+
+
+    <meta name="description" content="">
+    <meta name="author" content="IDLV">
+    <link rel="shortcut icon" href="{% static 'images/icons/icon.png' %}">
+
+    {% if isCommeUnDessein %}
+      <title>Comme un Dessein</title>
+    {% else %}
+      <title>Espero</title>
+    {% endif %}
+
+    <!-- Nanoscroller CSS -->
+    <!-- <link href="{% static 'libs/nanoscroller.css' %}" rel="stylesheet"> -->
+    <!-- <link href="{% static 'libs/pace/themes/pace-theme-center-circle.css' %}" rel="stylesheet" /> -->
+
+    <!-- <link href="{% static 'libs/jquery.mCustomScrollbar.css' %}" rel="stylesheet"> -->
+
+    <!-- Bootstrap core CSS -->
+    <link href="{% static 'libs/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- <link href="{% static 'libs/bootstrap.min.css' %}" rel="stylesheet"> -->
+    <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.5/css/bootstrap-modal.css" rel="stylesheet"> -->
+
+    <!-- Custom styles -->
+    <!-- <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.8.1/bootstrap-table.min.css" rel="stylesheet"> -->
+    <!-- <link href="{% static 'libs/bootstrap-colorpickersliders/bootstrap.colorpickersliders.css' %}" rel="stylesheet"> -->
+    <!-- <link href="{% static 'libs/jqtree/jqtree.css' %}" rel="stylesheet"> -->
+    <!-- <link href="{% static 'libs/slider.css' %}" rel="stylesheet"> -->
+
+    <link href="{% static 'libs/cropper/cropper.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/biostar.css' %}" rel="stylesheet">
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+
+    <!-- Latest compiled and minified CSS -->
+
+    {% if isCommeUnDessein %}
+      <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Open+Sans:400,700" rel="stylesheet">
+    {% else %}
+      <link href="https://fonts.googleapis.com/css?family=Patrick+Hand|Open+Sans:300,400,700" rel="stylesheet">
+    {% endif %}
+
+    <!-- <link href="https://fonts.googleapis.com/css?family=Coming+Soon|Open+Sans:400,700&display=swap" rel="stylesheet"> -->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <!-- <script>window.RXMLHttpRequest = XMLHttpRequest; // dajaxice modifies the XMLHttpRequest object and some of its default functionnalities do not work afterwards (no onload event sent), so we store the default version in RXMLHttpRequest</script> -->
+
+    <meta property="fb:app_id"          content="263330707483013" /> 
+    <meta property="og:type"            content="article" /> 
+    <meta property="og:url"             content="https://commeundessein.co/{{city}}/drawing-{{drawingPk}}" /> 
+    <meta property="og:title"           content="{{drawingTitle}}" /> 
+    <meta property="og:description"     content="{{drawingDescription}}" /> 
+    <meta property="og:image"           content="{{drawingImageURL}}" />
+    <meta property="og:image:width"     content="1200" />
+    <meta property="og:image:height"    content="630" />
+    
+  </head>
+
+  <body draggable="true">
+    
+
+    <div id="FavoriteTools" class="cd-row">
+      <h3 class="title"> 
+        <!-- <img class="title-img" src="{% static 'images/icons/logo48.png' %}" alt="commeUnDessein_logo"/> -->
+        {% if isCommeUnDessein %}
+        
+          <a href="/"><span class="big-title commeundessein">Comme un Dessein</span><span class="small-title">C</span></a>
+        
+        {% else %}
+
+          <a href="/"><span class="big-title">Espero</span><span class="small-title">E</span></a>
+        
+        {% endif %}
+
+        <!--
+        <a href="https://gaming.youtube.com/watch?v=qlgzIEsSc6w">
+          <button class="btn btn-default" type="button">
+            <span class="glyphicon glyphicon-facetime-video"></span><span class="text" data-i18n="Live">Live</span>
+          </button>
+        </a>
+        -->
+
+      </h3>
+
+      <div class="tool-container cd-row cd-grow">
+        
+        <button class="arrow left">
+          <div class="arrow-left"></div>
+        </button>
+
+        <button class="arrow right">
+          <div class="arrow-right"></div>
+        </button>
+        
+        
+        <ul id="sortable2" class="favorite-tool-list tool-list connectedSortable module-list">
+          <!-- <li data-name="Precise path" class="tool-btn"><img src="{% static 'images/icons/inverted/editCurve.png' %}" alt="editCurve"></li>
+          <li data-name="Rectangle" data-cursor="rectangle" class="tool-btn"><img src="{% static 'images/icons/inverted/rectangle.png' %}" alt="rectangle"></li>
+          <li data-name="Spiral" data-cursor="spiral" class="tool-btn"><img src="{% static 'images/icons/inverted/spiral.png' %}" alt="spiral"></li> -->
+          <!-- <li data-name="Checkpoint"><span class="short-name">Ch.</span><span class="tool-name">Checkpoint</span></li> -->
+          <li id="user-profile" class="selected align-end cd-row">
+
+            {% if request.user.is_authenticated %}
+
+                <div class="user-profile cd-row">
+
+
+                  <div class="btn-group">
+
+                    <button type="button" class="btn btn-transparent mode-button dropdown-toggle" data-toggle="dropdown">
+                    <!-- <img class="user-img" src="{{ profileImageURL }}"/> -->
+                    <!-- <img class="glyphicon" src="{% static 'images/icons/inverted/icones_user_picture_02.png' %}"/> -->
+                    <img class="glyphicon" src="{% static 'images/icons/inverted/new 1/Profile.svg' %}"/>
+                    <span class="username">
+                      {% if request.user.first_name or request.user.last_name %}
+                        {{ request.user.first_name }} {{ request.user.last_name }}
+                      {% else %}
+                        {{ request.user.username }}
+                      {% endif %} </span><span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="" id="modify-user-profile" data-i18n="Profile">Profile</a></li>
+                      <li><a href="{% url 'account_logout' %}" data-i18n="Sign Out">Sign Out</a></li>
+                    </ul>
+                  </div>
+
+                </div>
+
+
+            {% else %}
+
+              <div id="user-login-group" class="btn-group">
+                <!-- <a href="/connexions/"> -->
+                  <button type="button" class="btn btn-success submit mode-button log-in dropdown-toggle">
+                    <img class="glyphicon" src="{% static 'images/icons/inverted/icones_connexion.png' %}"/> <span class="text" data-i18n="Sign in / up">Sign in / up</span>
+                  </button>
+                <!-- </a> -->
+
+
+
+                <!-- <button type="button" class="btn btn-warning submit mode-button log-in dropdown-toggle" data-toggle="dropdown">
+                  <img class="glyphicon" src="{% static 'images/icons/inverted/icones_connexion.png' %}"/> <span class="text" data-i18n="Sign in / up">Sign in / up</span>
+ -->
+                  <!-- <span class="glyphicon glyphicon-log-in"></span><span class="text" data-i18n="Sign in / up">Sign in / up</span> -->
+               <!--  </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li>Se connecter avec</li>
+                  <li><a href="{% provider_login_url "google" %}">Google</a></li>
+                  <li><a href="{% provider_login_url "github" %}">Github</a></li> 
+                  <li><a href="/accounts/facebook/login/"><div class="fb">Facebook</div></a></li>
+                  <li><a href="{% url 'account_login' %}">Comme un Dessein</a></li>
+                  <div class="dropdown-divider"></div>
+                  <li class="sign-up"><a href="{% url 'account_signup' %}" data-i18n='Sign up'>Sign up</a></li>
+                </ul> -->
+              </div>
+
+              {% include "socialaccount/snippets/login_extra.html" %}
+
+            {% endif %}
+
+           </li>
+        </ul>
+
+        <div class="mode-buttons cd-row cd-grow">
+            
+            <!-- <button class="hidden btn btn-danger submit mode-button icon-only cancel-drawing" type="button">
+              <span class="glyphicon glyphicon-remove"></span>
+            </button> -->
+
+            <button class="hidden btn btn-success submit mode-button submit-drawing" type="button">
+              <span class="glyphicon glyphicon-ok"></span><span class="text" data-i18n="Submit drawing">Submit drawing</span>
+            </button>
+
+
+
+        </div>
+
+        <!-- <button class="btn btn-primary submit mode-button begin-drawing" type="button"><span class="glyphicon glyphicon-ok"></span>Begin drawing</button> -->
+
+      </div>
+    </div>
+
+    <div id="timeline" class="cd-row">
+
+      <button type="button" class="btn btn-default btn-xs btn-down show">
+        <span class="glyphicon glyphicon-film"></span>
+      </button>
+
+      <div class="cd-grow cd-column">
+        <div class="info"><span class="date"></span><span class="events"></span></div>
+
+        <div class="cd-grow cd-row">
+
+          <button type="button" class="btn-navigate btn btn-step-backward">
+            <span class="glyphicon glyphicon-step-backward"></span>
+          </button>
+          <button type="button" class="btn-navigate btn btn-play">
+            <span class="glyphicon glyphicon-play"></span>
+          </button>
+          <button type="button" class="btn-navigate btn btn-step-forward">
+            <span class="glyphicon glyphicon-step-forward"></span>
+          </button>
+
+          <canvas id="timeline-canvas" resize hidpi="off" class="cd-grow"></canvas>
+        </div>
+      </div>
+      
+      <button type="button" class="btn btn-close">
+        <span class="glyphicon glyphicon-remove"></span>
+      </button>
+
+    </div>
+
+    <div id="CommeUnDessein_alerts" class="r-hidden">
+
+      <div class="alert-controls cd-row">
+
+        <div class="cd-column">
+          <button type="button" class="btn btn-xs btn-up">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+          </button>
+          <button type="button" class="btn btn-xs btn-down">
+            <span class="glyphicon glyphicon-chevron-down"></span>
+          </button>
+        </div>
+
+        <div class="badge-xs alert-number"></div>
+      </div>
+
+      <div class="alert fade in">
+        <p></p>
+      </div>
+
+      <div class="show-btn-container">
+        <button type="button" class="btn btn-default btn-xs btn-down show">
+          <span class="glyphicon glyphicon-comment"></span>
+        </button>
+      </div>
+
+
+      <button type="button" class="btn btn-close">
+        <span class="glyphicon glyphicon-remove"></span>
+      </button>
+
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+       <!--  <div id="user-profile">
+          <ul class="user-profile">
+            {% if request.user.is_authenticated %}
+
+                <img class="user-img" src="{{ request.user.profile.profile_image_url }}"/>
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary">
+                    {% if request.user.first_name or request.user.last_name %}
+                      {{ request.user.first_name }} {{ request.user.last_name }}
+                    {% else %}
+                      {{ request.user.username }}
+                    {% endif %}
+                  </button>
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="{% url 'account_logout' %}">Sign Out</a></li>
+                  </ul>
+                </div>
+
+            {% else %}
+
+                <div class="btn-group">
+                  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    Sign in / up <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="{% provider_login_url "google" %}">Google</a></li>
+                    <li><a href="/accounts/facebook/login/"><div class="fb">Facebook</div></a></li>
+                    <li><a href="{% url 'account_login' %}">CommeUnDessein</a></li>
+                    <li><a href="{% url 'account_signup' %}">Sign up</a></li>
+                  </ul>
+                </div>
+                {% include "socialaccount/snippets/login_extra.html" %}
+
+            {% endif %}
+          </ul>
+        </div> -->
+        <div id="fb-root"></div>
+
+        <!-- Sidebar -->
+
+        <div id="sidebar" class="sidebar r-sidebar-hidden r-hidden hidden">
+
+          <button type="button" class="sidebar-handle btn btn-default">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+          </button>
+
+          <div class="item-list">
+            <div class="sidebar-scrollbar mCustomScrollbar">
+
+              <div class="panel-group" id="accordion">
+
+                <div class="panel panel-default in">
+                  <div class="panel-heading">
+                  <!-- 
+                    <h4 class="panel-title" data-toggle="collapse" data-target="#FavoriteTools">
+                      <a>
+                        Tools
+                      </a>
+                    </h4>
+                     -->
+                  </div>
+                </div>
+
+
+<!-- 
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title collapsed" data-toggle="collapse" data-target="#AllTools">
+                      <a>
+                        All tools
+                      </a>
+                    </h4>
+                  </div>
+
+                  <div id="AllTools" class="panel-collapse collapse">
+                    <div class="panel-body">
+
+                      <div class="all-tools commeUnDessein-ui">
+                        <div class="search search-tools">
+                          <input type="text" class="search-tool" placeholder="Tool name">
+                          <button class="btn btn-default open-modal"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+                        </div>
+                        <div class="mCustomScrollbar tree">
+                          <ul id="sortable1" class="all-tool-list connectedSortable module-list" >
+                          </ul>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                </div>
+ -->
+
+
+                
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h4 class="panel-title collapsed" data-toggle="collapse" data-target="#History">
+                      <a>
+                        History
+                      </a>
+                    </h4>
+                  </div>
+
+                  <div id="History" class="panel-collapse collapse">
+                    <div class="panel-body">
+                      <div class="mCustomScrollbar history">
+                        <ul class="history commeUnDessein-ui command-list">
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+               
+
+                <div class="panel panel-default hidden">
+                  <div class="panel-heading">
+                    <h4 class="panel-title collapsed file" data-toggle="collapse" data-target="#City">
+                      <a>
+                        <span data-i18n='Modes'>Modes</span>
+                      </a>
+                    </h4>
+                  </div>
+
+                  <div id="City" class="panel-collapse collapse">
+                    <div class="panel-body romanesco-ui">
+
+                      <div class="mCustomScrollbar cities romanesco-ui">
+                        <h6 class="hidden">Your cities</h6>
+                        <ul class="city-list user-cities hidden">
+                        </ul>
+                        <h6 class="hidden">Public cities</h6>
+                        <ul class="city-list public-cities ">
+                        </ul>
+                      </div>
+                      <!-- <div class='footer'> -->
+                        <!-- <button class="btn btn-success open" type="button"><span class="glyphicon glyphicon-open" aria-hidden="true"></span>List cities</button> -->
+                        <!-- <button class="btn btn-success create-city" type="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span data-i18n='Create mode'>Create mode</span></button> -->
+                      <!-- </div> -->
+                    </div>
+                  </div>
+
+                </div>
+                
+                <div class="panel panel-default">
+                  <div class="panel-heading hidden">
+                    <h4 class="panel-title" data-toggle="collapse" data-target="#RItems">
+                      <a data-i18n='Items'>
+                        Items
+                      </a>
+                    </h4>
+                  </div>
+
+
+                </div>
+
+                <div class="dat-gui dg-sidebar"></div>
+
+                <div class="panel panel-default in">
+                  <div class="panel-heading hidden">
+                    <h4 class="panel-title" data-toggle="collapse" data-target="#Chat">
+                      <a>
+                        Chat
+                      </a>
+                    </h4>
+                  </div>
+
+                  <div id="Chat" class="panel-collapse collapse in">
+                    <div id="chatContent" class="panel-body">
+
+                      {% if not request.user.is_authenticated %}
+
+                        <div id="chatLogin">
+
+                          <p class="default-username-message"></p>
+                          <p><a class="sign-in" href="" data-i18n='Sign in'>Sign in</a> <span data-i18n='or'>or</span> <a class="change-username" href="" data-i18n='choose another user name'>choose another user name</a></p>
+
+                          <div id="chatUserName" class="input-group commeUnDessein-ui">
+                            <input id="chatUserNameInput" type="text" class="form-control" data-i18n="[placeholder]Username" placeholder="Username">
+                            <span class="input-group-btn">
+                              <button id="chatUserNameSubmit" class="btn btn-default" type="button">Chat</button>
+                            </span>
+                          </div>
+
+                        </div>
+                      {% endif %}
+
+                      <p class="hidden" id="chatUserNameError" data-i18n="Error setting username.">Error setting username.</p>
+
+                      <div id="chatMain" class="hidden">
+
+                        <p id="chatConnectingMessage" ><span data-i18n="Connecting">Connecting</span>...</p>
+
+                        <div id="messages">
+                          <p id="chatRoom" class="hidden"><span data-i18n="Room">Room</span>:</p>
+                          <p id="chatUserNames"><span data-i18n="Online">Online</span>:</p>
+                          <div id="chatMessagesScroll" class="mCustomScrollbar"><div id="chatMessages" class=""></div></div>
+                        </div>
+
+                        <div id="chatSendMessage" class="input-group commeUnDessein-ui">
+                          <input id="chatSendMessageInput" type="text" class="form-control">
+                          <span class="input-group-btn">
+                            <button id="chatSendMessageSubmit" class="btn btn-default" type="button" data-i18n="Send">Send</button>
+                          </span>
+                        </div>
+
+
+                      </div>
+
+                    </div>
+                  </div>
+                </div>  <!-- chat panel   -->
+
+
+                <div class="panel panel-default in last-panel about-panel">
+
+                  <a href="http://idlv.co/"><img src="static/images/icons/inverted/icones_idlv.png"></a>
+                  <!-- <img src="static/images/icons/inverted/icones_CC_NCSABY.png"> -->
+                  <!-- <div><img src='static/images/icons/cc.svg'></div> -->
+                  
+                  <!-- <a id="about-link" href="/about.html" data-i18n="About">About</a> -->
+                  <a id="terms-of-service-link" href="/terms-of-service.html" data-i18n="Terms of Service" class="cd-link">Terms of Service</a>
+                  <a id="privacy-policy-link" href="/privacy-policy.html" data-i18n="Privacy Policy" class="cd-link">Privacy Policy</a>
+                  <a href="mailto:idlv.contact@gmail.com">idlv.contact@gmail.com</a>
+
+                </div>  <!-- about panel   -->
+
+
+              </div>
+
+            </div> <!-- /mCustomScrollbar -->
+          </div> <!-- /item-list -->
+
+        </div> <!-- / Sidebar -->
+
+        <div class="dat-gui dg-right"></div>
+
+        <div id="stage" class="main">
+
+          <!-- <canvas id="selection-canvas" resize hidpi="off"></canvas> -->
+
+          <div id="rasters"></div>
+
+          <div class="hidden media-separator"></div>
+          <div class="hidden text-separator"></div>
+
+          <!-- <canvas id="background-canvas" resize hidpi="off"></canvas> -->
+          <canvas id="canvas" resize hidpi="off" data-pos-x="{{ x }}" data-pos-y="{{ y }}" data-points="{{ points }}" data-box="{{ box }}" data-site="{{ site }}" data-message="{{ message }}" data-load-entire-area="{{ loadEntireArea }}" data-city="{{ city }}" data-city-event-date="{{ cityEventDate }}" data-city-event-date="{{ cityEventLocation }}" data-city-finished="{{ cityFinished }}" data-city-message="{{ cityMessage }}" data-city-stroke-width="{{ cityStrokeWidth }}" data-city-width="{{ cityWidth }}" data-city-height="{{ cityHeight }}" data-city-pixel-per-mm="{{ cityPixelPerMm }}" data-city-use-svg="{{ cityUseSVG }}" data-city-mode="{{ cityMode }}" data-city-use-vote-colors="{{ cityUseVoteColors }}" data-owner="{{ owner }}" data-is-admin="{{ userIsAdmin }}" data-drawing-pk="{{ drawingPk }}" data-tile-pk="{{ tilePk }}" data-bounds="{{ bounds }}" data-github-login="{{ githubLogin }}" data-username="{{ request.user.username }}" data-user-email="{{ request.user.email }}" data-email-confirmed="{{ emailConfirmed }}" data-is-authenticated="{{ request.user.is_authenticated }}" data-drawing-mode="{{ drawingMode }}" data-positiveVoteThreshold="{{ positiveVoteThreshold }}" data-negativeVoteThreshold="{{ negativeVoteThreshold }}" data-voteMinDuration="{{ voteMinDuration }}" data-application="{{ application }}"></canvas>
+          <div id="rasters"></div>
+
+          <div id="html-view">
+          </div>
+
+          <div id="submit-drawing-button">
+            <!-- <button class="btn btn-danger mode-button" type="button"><span class="glyphicon glyphicon-remove"></span><span class="text" data-i18n="Delete drawing">Delete drawing</span></button>
+            <button class="btn btn-success submit mode-button" type="button"><span class="glyphicon glyphicon-ok"></span><span class="text" data-i18n="Submit drawing">Submit drawing</span></button> -->
+          </div>
+
+          <!-- <ul class="hidden commeUnDessein-ui selectable-item-list"></ul> -->
+
+        </div>
+
+
+        <div id="drawingPanel" class="commeUnDessein-ui">
+
+          <button id="drawing-panel-handle" type="button" class="btn btn-default">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+          </button>
+
+          <div class='header item'>
+            <h4 class="drawing-panel-title" data-i18n="Drawing">Drawing</h4>
+            <button class="btn btn-default icon-only transparent close-panel" type="button"><span class="glyphicon glyphicon-remove"></span></button>
+          </div>
+
+          <!-- 
+          <div class="handle panel-handle">
+            <button type="button" class="handle-left btn btn-default transparent">
+              <span class="glyphicon glyphicon-chevron-left"></span>
+            </button>
+            <button type="button" class="handle-right btn btn-default transparent">
+              <span class="glyphicon glyphicon-chevron-right"></span>
+            </button>
+          </div>
+          -->
+
+          <!-- <h4 id="RItems-title" class="panel-title" data-i18n='Drawings sorted by status'>
+              Drawings sorted by status
+          </h4> -->
+          
+
+          <div class="container cd-column cd-grow">
+
+            <div class="content-container cd-column cd-grow">
+
+              <div class="content cd-column cd-grow">
+
+                <div class="main-content cd-column cd-grow mCustomScrollbar scroll">
+
+
+                  <div class="cd-column-row cd-grow">
+
+                    <div id="drawing-panel-no-selection" class="cd-hidden cd-column">
+                      
+                      <div id="RItems" class="scroll">
+
+                        <div class="panel-body">
+                          <div class="rItems cd-tree">
+                            <ul class="layers folder overflow-y-auto">
+                              <!-- <li class="main-layer">
+                                <h6 class="title">Main layer</h6>
+                                <ul class="commeUnDessein-ui rPath-list">
+                                </ul>
+                                <ul class="commeUnDessein-ui rDiv-list">
+                                </ul>
+                              </li> -->
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div id="information-footer" class="cd-column cd-center">
+                        
+                        <!-- UNCOMMENT TO ADD VIDEO LINK -->
+                        <!-- <a class=""  href="https://www.youtube.com/channel/UCRMrTkJJYvGAerb1j-H-Miw/live" target="_blank">Regardez le robot dessiner en direct !</a> -->
+
+                        <a class="cd-large-link" href="http://idlv.co/" target="_blank"><img src="static/images/icons/inverted/icones_idlv.png"></a>
+
+                        <a class="cd-large-link" href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">
+                          <!-- <img src="static/images/icons/inverted/icones_CC_NCSABY.png">  -->
+                          <img src='static/images/icons/cc-by-sa.svg'>
+                          <!-- <br> -->
+                          <!-- <span>CC-BY-SA</span> -->
+
+                        </a>
+                        
+                        
+                        <!-- <a id="about-link" href="/about.html" data-i18n="About">About</a> -->
+                        <a class="cd-small-link" id="terms-of-service-link" href="/terms-of-service.html" target="_blank" data-i18n="Terms of Service">Terms of Service</a>
+                        <a class="cd-small-link" id="privacy-policy-link" href="/privacy-policy.html" target="_blank" data-i18n="Privacy Policy">Privacy Policy</a>
+                        <a class="cd-small-link" href="mailto:idlv.contact@gmail.com">idlv.contact@gmail.com</a>
+
+                      </div>   <!-- about panel   -->
+
+                    </div>  <!-- no selection  -->
+
+
+                    <div id="drawing-thumbnail" class="cd-column">
+
+                      <div class="thumbnail drawing-thumbnail">
+                      </div>
+
+                      <div class="thumbnail-footer cd-row cd-grow cd-end">
+                        <span class="title"></span>
+                        <span data-i18n="by">by</span>
+                        <span class="author"></span>
+                      </div>
+
+                    </div>
+
+<!--                     <div class="cd-column read">
+                      <h3 class="title"></h3>
+                      <h4 class="author"></h4>
+                      <p class="description"></p>
+                    </div> -->
+
+                    <form class="create cd-column cd-grow" autocomplete="off">
+
+                      <div class="cd-column tile-info">
+                        
+                        <div class="info">
+                          <div class="vote-stat"><span class="vote-stat-title" data-i18n='Tile Author'>Tile Author</span> : <span class="author"></span></div>
+                          <div class="vote-stat"><span class="vote-stat-title" data-i18n='Number'>Number</span> : <span class="number"></span></div>
+                          <div class="vote-stat"><span class="vote-stat-title" data-i18n='Position'>Position</span> : <span class="position"></span></div>
+                          <div class="vote-stat"><span class="vote-stat-title" data-i18n='Status'>Status</span> : <span class="status"></span></div>
+                          <div class="vote-stat"><span class="vote-stat-title due-date-title" data-i18n='This tile must be achieved before the'>This tile must be achieved before the</span> : <span class="display-block due-date"></span></div>
+                          <div class="vote-stat"><span class="vote-stat-title" data-i18n='This tile must be placed the'>This tile must be placed the</span> : <span class="display-block placement-date"></span></div>
+                        </div>
+
+                        <button class="btn btn-primary original-color print-tile" type="button"><span class="glyphicon glyphicon-print"></span><span data-i18n='Print tile'>Print tile</span></button>
+
+                        <input type="file" id="fileInput" multiple accept="image/*" style="display:none">
+
+                        <button class="btn btn-success original-color submit-photo" type="button"><span class="glyphicon glyphicon-ok"></span><span data-i18n='Submit photo'>Submit photo</span></button>
+                        
+                        <div class="thumbnail tile-thumbnail">
+                        </div>
+                        
+                      </div>
+
+                      <div class="form-group title-group">
+                        <label class="hidden" for="drawing-title" data-i18n="Title">Title</label>
+                        <input type="text" class="form-control modify" id="drawing-title" data-i18n="[placeholder]Drawing title" placeholder="Drawing title">
+                      </div>
+
+                      <div class="form-group cd-grow cd-column textarea hidden">
+                        <label for="drawing-description"  data-i18n="Description">Description</label>
+                        <textarea class="form-control cd-grow modify" id="drawing-description" rows="5"></textarea>
+                      </div>
+
+
+                      <div class="cd-column cd-end action-buttons">
+                        
+                        <button class="btn btn-success original-color submit" type="button"><span class="glyphicon glyphicon-ok"></span><span data-i18n='Submit'>Submit</span></button>
+
+                        <button class="btn btn-info original-color modify" type="button"><span class="glyphicon glyphicon-ok"></span><span data-i18n='Modify title'>Modify title</span></button>
+
+                        <button class="btn btn-warning original-color cancel" type="button"><span class="glyphicon glyphicon-remove"></span><span data-i18n='Cancel' class='text'>Cancel</span></button>
+
+
+                        <!-- <button class="btn btn-danger original-color" type="button"><span class="glyphicon glyphicon-flag"></span><span data-i18n='Report abuse'>Report abuse</span></button> -->
+                        
+                        
+                      </div>
+
+                      <div class="votes cd-row">
+
+                        <div class="cd-row cd-grow">
+
+                          <div class="cd-column cd-grow vote-buttons">
+                            
+                            <div class="cd-row">
+                              <button class="btn btn-success icon-only btn-lg vote-up" type="button">
+                                <!-- <img class="line" src="static/images/icons/inverted/icones_icon_thumbsup.png"> -->
+                                <img class="line" src="static/images/icons/inverted/new 1/Thumb up.svg">
+                                <img class="hand" src="static/images/icons/inverted/a-thumbup.png">
+                                <span class="glyphicon glyphicon-plus"></span><span class="text" data-i18n="Vote up">Vote up</span></button>
+                              <span class="n-votes positive">0</span>
+                              <div class="vote-list positive">
+                                <div class="arrow-left"></div>
+                                <span class="vote-list-label">Votes:</span>
+                                <ul class="positive list-unstyled"></ul>
+                              </div>
+                            </div>
+
+                            <div class="cd-row">
+                              <button class="btn btn-danger icon-only btn-lg vote-down" type="button">
+                                <!-- <img class="line" src="static/images/icons/inverted/icones_icon_thumbsdown.png"> -->
+                                <img class="line" src="static/images/icons/inverted/new 1/Thumb down.svg">
+                                <img class="hand" src="static/images/icons/inverted/a-thumbdown.png">
+                                <span class="glyphicon glyphicon-minus"></span><span class="text" data-i18n="Vote down">Vote down</span></button>
+                              <span class="n-votes negative">0</span>
+                              <div class="vote-list negative">
+                                <div class="arrow-left"></div>
+                                <span class="vote-list-label">Votes:</span>
+                                <ul class="negative list-unstyled"></ul>
+                              </div>
+                            </div>
+
+                          </div>
+
+                          <div class="cd-column hidden">
+
+                            <span class="vote-button positive">
+                              <span class="n-votes positive">0</span>
+                              <ul class="vote-list positive list-unstyled"></ul>
+                            </span>
+
+                            <span class="vote-button negative">
+                              <span class="n-votes negative">0</span>
+                              <ul class="vote-list negative list-unstyled"></ul>
+                            </span>
+
+                          </div>
+
+                        </div>
+
+                        <div class="cd-column cd-justify-content-center vote-stats">
+                          <div class="vote-stat"><span data-i18n='Status'>Status</span> : <span class="status"></span></div>
+                          <div class="vote-stat"><span class="n-votes total">0</span> votes</div>
+                          <div class="vote-stat"><span class="percentage-votes">0</span>% <span data-i18n='positive'>positive</span></div>
+                        </div>
+
+                      </div>
+
+                      <!-- <div class="cd-column share-buttons">
+
+                        <button class="cd-grow btn btn-danger original-color flag-drawing" type="button"><span class="glyphicon glyphicon-flag"></span><span data-i18n='Report abuse' class='text'>Report abuse</span></button>
+
+                        <button class="cd-grow btn btn-warning original-color copy-link" type="button"><span class="glyphicon glyphicon-link"></span><span data-i18n='Copy drawing link' class='text'>Copy drawing link</span></button>
+
+
+                        <button class="cd-grow btn btn-primary original-color share-facebook" type="button"><span class="glyphicon glyphicon-facebook"><img src="static/images/icons/inverted/facebook.png"></span><span data-i18n='Share on Facebook' class='text'>Share on Facebook</span></button>
+
+                        <button class="cd-grow btn btn-info original-color share-twitter" type="button"><span class="glyphicon glyphicon-tiwtter"><img src="static/images/icons/inverted/twitter.png"></span><span data-i18n='Tweet' class='text'>Tweet</span></button>
+
+                      </div>
+
+                      <div class="cd-row cd-end share-buttons">
+
+                        <button class="cd-grow btn btn-danger original-color flag-drawing" type="button"><span class="glyphicon glyphicon-flag"></span><span data-i18n='Report abuse' class='text'>Report abuse</span></button>
+
+                        <button class="cd-grow btn btn-warning original-color copy-link" type="button"><span class="glyphicon glyphicon-link"></span><span data-i18n='Copy drawing link' class='text'>Copy drawing link</span></button>
+
+                      </div>
+
+                      <div class="cd-row cd-end share-buttons">
+
+
+                        <button class="cd-grow btn btn-primary original-color share-facebook" type="button"><span class="glyphicon glyphicon-facebook"><img src="static/images/icons/inverted/facebook.png"></span><span data-i18n='Share on Facebook' class='text'>Share on Facebook</span></button>
+
+                        <button class="cd-grow btn btn-info original-color share-twitter" type="button"><span class="glyphicon glyphicon-tiwtter"><img src="static/images/icons/inverted/twitter.png"></span><span data-i18n='Tweet' class='text'>Tweet</span></button>
+
+                      </div> -->
+
+                      <div class="cd-row cd-end share-buttons">
+
+                        <button class="cd-grow btn btn-danger original-color report-abuse" type="button" data-toggle="popover" data-trigger="hover" data-i18n="[data-content]Report abuse" data-content="Report abuse" data-placement="top" data-container="#popovers"><span class="glyphicon glyphicon-flag"></span><span  class='text'></span></button>
+
+                        <button class="cd-grow btn btn-success original-color cancel-report" type="button" data-toggle="popover" data-trigger="hover" data-i18n="[data-content]Cancel report" data-content="Cancel report" data-placement="top" data-container="#popovers"><span class="glyphicon glyphicon-flag"></span><span  class='text'></span></button>
+
+                        <button class="cd-grow btn btn-warning original-color copy-link" type="button" data-toggle="popover" data-trigger="hover" data-i18n="[data-content]Copy drawing link to clipboard" data-content="Copy drawing link to clipboard" data-placement="top" data-container="#popovers"><span class="glyphicon glyphicon-link"></span><span  class='text'></span></button>
+
+
+                        <button class="cd-grow btn btn-primary original-color share-facebook" type="button" data-toggle="popover" data-trigger="hover" data-i18n="[data-content]Share on Facebook" data-content="Share on Facebook" data-placement="top" data-container="#popovers"><span class="glyphicon glyphicon-facebook"><img src="static/images/icons/inverted/facebook.png"></span><span class='text'></span></button>
+
+                        <button class="cd-grow btn btn-info original-color share-twitter" type="button" data-toggle="popover" data-trigger="hover" data-i18n="[data-content]Tweet" data-content="Tweet" data-placement="top" data-container="#popovers"><span class="glyphicon glyphicon-tiwtter"><img src="static/images/icons/inverted/twitter.png"></span><span  class='text'></span></button>
+
+                      </div>
+
+                      <div class="cd-row cd-end admin-buttons hidden">
+
+                        <button class="cd-grow btn btn-danger original-color delete-drawing" type="button"><span class="glyphicon glyphicon-trash"></span><span data-i18n="Delete drawing" class='text'>Delete drawing</span></button>
+
+                      </div>
+
+
+                      <div class="cd-column cd-end comments-container">
+                        <div class="cd-row comment-header">
+                          <h4>Commentaires</h4>
+                        </div>
+
+                        <div class="cd-column comments">
+                          
+                        </div>
+                        <div class="comment-area" contenteditable="true"></div>
+                        <button class="btn btn-primary original-color submit-comment" type="button"><span class="glyphicon glyphicon-ok"></span><span data-i18n='Add comment' class='text'>Add comment</span></button>
+
+                        <button class="cd-grow btn btn-success original-color start-discussion" type="button"><span class="glyphicon glyphicon-comment"></span><span data-i18n="Participate in discussion" class='text'>Participate in discussion</span></button>
+
+                      </div>
+                      
+                      <div class="cd-column cd-end discussion-container">
+                        <div class="cd-row comment-header">
+                          <h4>Discussion</h4>
+                        </div>
+
+                        <div id="discussion-content" class="cd-column discussion">
+                          
+                        </div>
+
+                      </div>
+
+                    </form>
+
+                  </div>
+
+                </div>
+
+
+
+              </div>
+
+                <div class="loading-animation">
+                    <span class=""><span class="loading-gif glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> <span class="text" data-i18n="Loading">Loading</span>...</span>
+                </div>
+
+                <div class="selected-drawings cd-column mCustomScrollbar">
+                  <div class="drawing-list-container cd-column cd-grow scroll">
+                      
+                      <!-- <div class="tiles-info">
+                        <div class="thumbnail drawing-thumbnail"></div>
+                        <h4 class="cd-grow cd-center title"></h4>
+                      </div> -->
+
+                      <ul class="commeUnDessein-ui drawing-list">
+                      </ul>
+                  </div>
+                </div>
+
+            </div>
+
+            <!-- <div class='footer item'>
+              <button class="btn btn-default modify" type="button"><span class="glyphicon glyphicon-remove"></span>Modify drawing</button>
+              <button class="btn btn-info submit" type="button"><span class="glyphicon glyphicon-ok"></span>Submit drawing</button>
+            </div> -->
+          </div>
+
+        </div>
+
+<!--     {% if not request.user.is_authenticated %}
+
+      <div id="splash-screen">
+        <div class="mCustomScrollbar">
+          <div class="cd-column">
+
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="screenshotModalLabel">Welcome to Comme un Dessein</h4>
+            </div>
+
+            <p>
+              Comme un dessein is a participative piece created by the french collective IDLV (Indiens dans la Ville). With the help of a simple web interface and a monumental plotter, everyone can submit a drawing which takes part of a larger pictural composition, thus compose a collective utopian artwork.
+            </p>
+
+
+
+
+            <div class="cd-row">
+
+              <button type="button" class="btn btn-info mode-button">
+                <span class="glyphicon glyphicon-sunglasses"></span>Just visit</a>
+              </button>
+
+              <div class="btn-group">
+                <button type="button" class="btn btn-primary mode-button log-in dropdown-toggle" data-toggle="dropdown">
+                  <span class="glyphicon glyphicon-log-in"></span>Sign in
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                  <li><a href="{% provider_login_url "google" %}">Google</a></li>
+                  <li><a href="{% provider_login_url "github" %}">Github</a></li>
+                  <li><a href="/accounts/facebook/login/"><div class="fb">Facebook</div></a></li>
+                  <li><a href="{% url 'account_login' %}">CommeUnDessein</a></li>
+                </ul>
+              </div>
+
+              <button type="button" class="btn btn-success submit mode-button log-in">
+                <span class="glyphicon glyphicon-user"></span><a href="{% url 'account_signup' %}">Sign up</a>
+              </button>
+
+              {% include "socialaccount/snippets/login_extra.html" %}
+
+            </div>
+
+
+          
+          </div>
+        </div>
+      </div>
+
+    {% endif %} -->
+
+<!--
+        <ul id="dragTest" style="
+    position: absolute;
+    left: 300px;
+">
+          <div class="drop-zone" style="
+    height: 200px;
+    width: 200px;
+    border: red solid;
+"></div>
+        </ul> -->
+
+
+      </div>
+    </div>
+
+    <!-- <div id="loadingBar"><img src="static/images/loader.GIF"></div> -->
+    <div id="drawingBar" ><span data-i18n='Drawing'>Drawing</span>...</div>
+    <div id="loadingBar">
+      <div class="background">
+        <div id="spinner"></div>
+        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> <span class="text" data-i18n='Loading'>Loading</span>...
+      </div>
+    </div>
+    <div id="camera">
+      <button id="cancel-photo" class="btn"><span class="glyphicon glyphicon-remove" aria-hidden="true"> </button>
+      
+      <div class="cd-sliders cd-column">
+        
+        <div class="cd-slider cd-row saturation">
+          <button class="btn minus"><span class="glyphicon glyphicon-minus" aria-hidden="true"> </button>
+          <div class="cd-inline">
+            <span class="cd-line"></span>
+            <span class="glyphicon glyphicon-tint" aria-hidden="true"></span>
+            <span class="cd-line"></span>
+          </div>
+          <button class="btn plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"> </button>
+        </div>
+
+        <div class="cd-slider cd-row lightness">
+          <button class="btn minus"><span class="glyphicon glyphicon-minus" aria-hidden="true"> </button>
+            <div class="cd-inline">
+              <span class="cd-line"></span>
+              <!-- <span class="glyphicon glyphicon-lamp" aria-hidden="true"></span> -->
+              <span class="glyphicon glyphicon-adjust" aria-hidden="true"></span>
+              <span class="cd-line"></span>
+            </div>
+            <button class="btn plus"><span class="glyphicon glyphicon-plus" aria-hidden="true"> </button>
+        </div>
+
+      </div>
+
+      <button id="take-photo" class="btn-lg"><span class="glyphicon glyphicon-facetime-video" aria-hidden="true"></span> <span data-i18n='Take photo'>Take photo</span></button>
+    </div>
+    
+    <div id="dropMessage" class="">
+      <div class="background">
+        <span class="text" data-i18n='Drop your image here to trace it'>Drop your image here to trace it</span>
+      </div>
+    </div>
+
+    <!-- <canvas id="loadingBar"></canvas> -->
+    
+    <div id="popovers"></div>
+
+    <div id="templates" class="hidden">
+
+      <div id="welcome-text">
+
+        <p><strong>« La démocratie participative fait-elle réellement émerger l’intérêt général ? »</strong></p>
+
+        <!-- <p>L’installation <strong><em>Comme un dessein</em></strong> fait écho à cette question actuelle et invite le public, <strong>du 10 au 15 octobre 2017</strong>, à débattre et à proposer des dessins qui viendront progressivement composer une fresque collective grâce à un traceur vertical disposé dans le <strong>Théâtre du Vieux St-Étienne</strong>.</p> -->
+        
+
+        <p>L’installation <strong><em>Comme un dessein</em></strong> fait écho à cette question actuelle et invite le public à débattre et à proposer des dessins qui viendront progressivement composer une fresque collective grâce à un traceur vertical disposé dans l'espace public.</p>
+        
+        <!-- UNCOMMENT TO ADD VIDEO LINK -->
+        <!-- <p><a href="https://www.youtube.com/channel/UCRMrTkJJYvGAerb1j-H-Miw/live" target="_blank">Regardez le robot dessiner en direct !</a><p> -->
+         
+        <!-- <p><a href="https://commeundessein.co/festival-maintenant/">Revoir l'édition du Festival Maintenant</a><p> -->
+
+        <!-- <p><a href="http://discussion.commeundessein.co/">Venez échanger sur l'espace de discussion</a> afin que l'on crée ensemble notre oeuvre collaborative !<p> -->
+
+        <p>Les règles de vote (ces règles sont suceptibles de changer au cours de l'événement) :
+
+          <ul>
+            <li>pour être <strong>accepté</strong> (puis dessiné), un dessin doit obtenir <strong>{{positiveVoteThreshold}} votes positifs</strong>,</li>
+            <li>il sera <strong>rejeté</strong> à partir de <strong>{{negativeVoteThreshold}} votes négatifs</strong>.</li>
+          </ul>
+
+        </p>
+
+        <p>Bonne participation !</p>
+
+        <div class="cd-row cd-center">
+          
+          <a class="cd-medium-link" href="http://idlv.co/" target="_blank"><img src="static/images/idlv_small.png"></a>
+
+          <!-- <a class="cd-medium-link" href="https://www.maintenant-festival.fr/2017/" target="_blank"><img src="static/images/BLOCKMARK_NOIR_CMJN_small.png"></a> -->
+
+          <!-- <img class="cd-small-link" src="static/images/LOGO-LRPLA-noir_small.png"> -->
+
+        </div>
+        
+        <!-- 
+        <p><small>Une proposition du <em>collectif IDLV</em>, accompagnée par la <em>Ville de Rennes</em> au titre du dispositif <em>« Les rennais prennent l'art »</em> et coproduite par <em>Electroni[k]</em>, en réponse à l’appel à projet international <em>Art et technologie 2016</em>.</small></p>
+         -->
+
+      </div>
+
+      <div id="end-text">
+        <p>L'oeuvre réalisée à l'initiative du collectif IDLV par <strong>217 dessinateurs</strong> et <strong>209 votants</strong> à l'occasion du festival Maintenant 2017 est désormais disponible sous <a href="https://creativecommons.org/licenses/by-nc-sa/2.0/fr/">licence Creative Commons CC BY-NC-SA 2.0 FR</a>. L'oeuvre physique pourra par la suite être exposée dans des lieux publics, sans utilisation commerciale.</p>
+
+        <ul>
+          <li>Nombre dessins : 567</li>
+          <li>Nombre de votes : 4971</li>
+        </ul>
+
+        <p>Un grand merci à tous pour vos dessins, votes, réactions, on vous tient au courant très rapidement de la suite du projet. N'hésitez pas à vous saisir dés maintenant des données récoltées.</p>
+
+        <div class="cd-row cd-center">
+          
+          <a class="cd-medium-link" href="http://idlv.co/" target="_blank"><img src="static/images/idlv_small.png"></a>
+
+          <a class="cd-medium-link" href="https://www.maintenant-festival.fr/2017/" target="_blank"><img src="static/images/BLOCKMARK_NOIR_CMJN_small.png"></a>
+
+          <img class="cd-small-link" src="static/images/LOGO-LRPLA-noir_small.png">
+
+        </div>
+
+        <!-- <p><small>Une proposition du <em>collectif IDLV</em>, accompagnée par la <em>Ville de Rennes</em> au titre du dispositif <em>« Les rennais prennent l'art »</em> et coproduite par <em>Electroni[k]</em>, en réponse à l’appel à projet international <em>Art et technologie 2016</em>.</small></p> -->
+
+      </div>
+
+      <div id="beta-text">
+
+        <p>Merci de tester <strong><em>Comme un dessein</em></strong> :-)</p>
+
+        <p>Choisissez votre mode de dessin :</p>
+
+        <div class="cd-column cd-wrap">
+          <a href="https://commeundessein.co/line"><button type="button" class="btn btn-beta btn-warning cd-no-radius">mode ligne libre</button></a>
+          <a href="https://commeundessein.co/line-ortho-diag"><button type="button" class="btn btn-beta btn-info cd-no-radius">mode ligne contrainte</button></a>
+          <a href="https://commeundessein.co/ortho-diag"><button type="button" class="btn btn-beta btn-success cd-no-radius">mode crayon contraint</button></a>
+          <a href="https://commeundessein.co/pen"><button type="button" class="btn btn-beta btn-primary cd-no-radius">mode crayon libre</button></a>
+        </div>
+
+        <!-- <ul>
+          <li><a href="https://commeundessein.co/line"><button type="button" class="btn btn-warning cd-no-radius">mode ligne libre</button></a></li>
+          <li><a href="https://commeundessein.co/line-ortho-diag"><button type="button" class="btn btn-info cd-no-radius">mode ligne contrainte</button></a></li>
+          <li><a href="https://commeundessein.co/ortho-diag"><button type="button" class="btn btn-success cd-no-radius">mode crayon contraint</button></a></li>
+          <li><a href="https://commeundessein.co/pen"><button type="button" class="btn btn-primary cd-no-radius">mode crayon libre</button></a></li>
+        </ul> -->
+
+        <!-- <ul>
+          <li><a href="https://commeundessein.co/line">mode ligne libre</a></li>
+          <li><a href="https://commeundessein.co/line-ortho-diag">mode ligne contrainte</a></li>
+          <li><a href="https://commeundessein.co/ortho-diag">mode crayon contraint</a></li>
+          <li><a href="https://commeundessein.co/pen">mode crayon libre</a></li>
+        </ul> -->
+        <p>Vous pouvez discuter, collaborer et parler de vos dessins sur <a href="http://discussion.commeundessein.co/">l'espace de discussion Comme un Dessein</a>.</p>
+
+        <p>Après avoir participé, vous pouvez <a href="https://arthur232.typeform.com/to/xCFytN">répondre au sondage</a> pour nous aider à améliorer l'interface. :-) Merci !</p>
+
+      </div>
+
+      <div class="modals">
+
+        <!-- Input div modal -->
+        <div class="modal fade" id="divModal" tabindex="-1" role="dialog" aria-labelledby="divModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="divModalLabel"></h4>
+              </div>
+              <div class="modal-body">
+
+                <p class="cost"></p>
+
+                <div id="divModalTypeSelector">
+
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="typeSelector" id="divModalMessage" value="lock" checked>
+                      Create message
+                    </label>
+                  </div>
+
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="typeSelector" id="divModalLink" value="link" checked>
+                      Create link (® x1000)
+                    </label>
+                  </div>
+
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="typeSelector" id="divModalWebsite" value="website">
+                      Create website (® x2)
+                    </label>
+                    <p class="help-block">This will give you a specific address: <italic>sitename.romanesc.co</italic>.In order to have a custom site name, you can redirect your own domain to this address.</p>
+                  </div>
+
+                  <div class="radio disabled">
+                    <label>
+                      <input type="radio" name="typeSelector" id="divModalVieoGame" value="video-game">
+                      Create vieo game (® x2)
+                    </label>
+                  </div>
+
+                </div>
+
+                <div class="checkbox restrict-area">
+                  <label>
+                    <input id="divModalRestrictArea" type="checkbox"> Restrict area
+                  </label>
+                  <p class="help-block">Users visiting your website will not be able to go out of the site boundaries.</p>
+                </div>
+
+                <div class="checkbox disable-toolbar">
+                  <label>
+                    <input id="divModalDisableToolbar" type="checkbox"> Disable toolbar
+                  </label>
+                  <p class="help-block">Users will not have access to the toolbar on your site.</p>
+                </div>
+
+                <div class="form-group url-name-group">
+                  <label for="divModalUrlSiteName">Site name</label>
+                  <input id="divModalUrlSiteName" type="text" class="url-name form-control" placeholder="Site name">
+                </div>
+
+                <div class="form-group name-group">
+                  <label for="divModalSiteName">Site name</label>
+                  <!-- <input id="divModalSiteName" type="text" class="name form-control" placeholder="Site name"> -->
+                  <div class="input-group">
+                    <input id="divModalSiteName" type="text" class="name form-control" placeholder="Site name">
+                    <span class="input-group-addon">.commeUnDessein.co</span>
+                  </div>
+                </div>
+
+                <div class="form-group message-group">
+                  <label for="divModalMessage">Message</label>
+                  <input id="divModalMessage" type="text" class="message form-control submit-shortcut" placeholder="Enter the message you want others to see when they look at this link.">
+                </div>
+
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Add</button>
+              </div>
+            </div>
+          </div>
+        </div> <!-- /Input div modal -->
+
+        <!-- Screenshot modal -->
+        <div class="modal fade" id="screenshotModal" tabindex="-1" role="dialog" aria-labelledby="screenshotModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="screenshotModalLabel">Screenshot</h4>
+              </div>
+              <div class="modal-body">
+                <p>What would you like to do with the extracted image?</p>
+                <div class="image">
+                  <a href="" download="image.png" class="png"><img class="png" src="" alt="screenshot-png"></a>
+                </div>
+                <div class="form-group url-name-group">
+                  <label for="screenshotModalDescription">Description (Optional)</label>
+                  <input id="screenshotModalDescription" type="text" class="form-control" name="message"placeholder="Artwork made with CommeUnDessein">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" name="copy-data-url" data-clipboard-text="">Copy data url</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" name="download-png">Download PNG</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" name="download-svg">Download SVG</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" name="publish-on-facebook">Publish on Facebook</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" name="publish-on-facebook-photo">Publish on Facebook as photo</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" name="publish-on-pinterest">Publish on Pinterest</button>
+                <a name="publish-on-twitter" class="btn btn-primary twitter-share-button" href="https://twitter.com/share" data-text="Artwork made on CommeUnDessein" data-size="large" data-count="none">Publish on Twitter</a>
+              </div>
+            </div>
+          </div>
+        </div> <!-- /Input div modal -->
+
+        <!-- Custom modal -->
+        <div class="modal fade" id="customModal" tabindex="-1" role="dialog" aria-labelledby="customModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="customModalLabel"></h4>
+              </div>
+              <div class="modal-body">
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" name="cancel" data-dismiss="modal" data-i18n="Cancel">Cancel</button>
+                <button type="button" class="btn btn-primary" name="submit" data-i18n="Ok">Ok</button>
+              </div>
+            </div>
+          </div>
+        </div> <!-- /Custom modal -->
+
+      </div><!-- /Modals -->
+
+
+      <div class="hidden">
+
+        <div class="color-picker-container">
+          <div class="color-picker">
+            <!-- <label><input type='checkbox' class='gradient-checkbox' form-control>Gradient</label> -->
+
+            <select name="color-type">
+              <option value="flat-color">Flat color</option>
+              <option value="linear-gradient">Linear Gradient</option>
+              <option value="radial-gradient">Radial gradient</option>
+            </select>
+
+            <div class="color-picker-slider"></div>
+          </div>
+        </div>
+
+        <div class="custom-div">
+          <!-- <div class="handle tl"></div>
+          <div class="handle tr"></div>
+          <div class="handle br"></div>
+          <div class="handle bl"></div> -->
+          <div class="mask"></div>
+        </div>
+
+        <div class="screenshot-btn btn-group">
+          <button type="button" class="btn btn-primary extract-btn" data-click='quick-snapshot'>Take snapshot</button>
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a class="extract-btn" data-click='quick-snapshot'>Take snapshot (fast)</a></li>
+            <li><a class="extract-btn" data-click='redraw-snapshot'>Redraw and take snapshot (slower)</a></li>
+          </ul>
+        </div>
+
+        <li class="layer closed">
+          <div class="cd-row commeUnDessein-ui layer-header">
+            <h6 class="title cd-grow"></h6>
+            <span class="badge n-items">0</span>
+            <!-- <button type="button" class="btn btn-default show-btn" aria-label="Show">
+              <span class="glyphicon glyphicon-eye-open eye" aria-hidden="true"></span>
+            </button> -->
+          </div>
+          <ul class="commeUnDessein-ui rPath-list">
+          </ul>
+          <!-- <hr> -->
+          <ul class="commeUnDessein-ui rDiv-list">
+          </ul>
+        </li>
+
+        <div class="lock-content content" data-container="body"></div>
+
+        <button class="dat-gui-toggle" type="button"> <span class="glyphicon glyphicon-transfer" aria-hidden="true"></span></button>
+<!--
+        <div class="slider-group">
+          <label for="" class="slider"></label>
+          <input id="" type="text" class="bootstrap-slider" value="" data-slider-min="0" data-slider-max="100" data-slider-step="1" data-slider-value="0">
+        </div> -->
+
+        <label class="checkbox"><input type="checkbox" class="" name="" checked=""><span class="text"></span></label>
+
+        <div id="fontStyle" class="btn-group" data-toggle="buttons">
+          <label class="btn btn-default btn-xs" name="italic">
+            <input type="checkbox"><span class="glyphicon glyphicon-italic"></span>
+          </label>
+          <label class="btn btn-default btn-xs" name="bold">
+            <input type="checkbox"><span class="glyphicon glyphicon-bold"></span>
+          </label>
+          <label class="btn btn-default btn-xs" name="underline">
+            <input type="checkbox"><img class="glyphicon" src="{% static 'images/icons/inverted/underline.png' %}"/>
+          </label>
+          <label class="btn btn-default btn-xs" name="overline">
+            <input type="checkbox"><img class="glyphicon" src="{% static 'images/icons/inverted/overline.png' %}"/>
+          </label>
+          <label class="btn btn-default btn-xs" name="line-through">
+            <input type="checkbox"><img class="glyphicon" src="{% static 'images/icons/inverted/line-through.png' %}"/>
+          </label>
+        </div>
+
+        <div id="textAlign" class="btn-group">
+          <button type="button" class="btn btn-default justify btn-xs"><span class="glyphicon glyphicon-align-justify"></span></button>
+          <button type="button" class="btn btn-default align-left btn-xs"><span class="glyphicon glyphicon-align-left"></span></button>
+          <button type="button" class="btn btn-default align-center btn-xs"><span class="glyphicon glyphicon-align-center"></span></button>
+          <button type="button" class="btn btn-default align-right btn-xs"><span class="glyphicon glyphicon-align-right"></span></button>
+        </div>
+
+        <div id="align" class="btn-group btn-group-xs align-btn-group">
+          <button type="button" class="btn btn-default btn-xs" data-type="h-top"><img class="glyphicon" src="{% static 'images/icons/align/h-top.png' %}"/></button>
+          <button type="button" class="btn btn-default btn-xs" data-type="h-center"><img class="glyphicon" src="{% static 'images/icons/align/h-center.png' %}"/></button>
+          <button type="button" class="btn btn-default btn-xs" data-type="h-bottom"><img class="glyphicon" src="{% static 'images/icons/align/h-bottom.png' %}"/></button>
+
+          <button type="button" class="btn btn-default btn-xs" data-type="v-left"><img class="glyphicon" src="{% static 'images/icons/align/v-left.png' %}"/></button>
+          <button type="button" class="btn btn-default btn-xs" data-type="v-center"><img class="glyphicon" src="{% static 'images/icons/align/v-center.png' %}"/></button>
+          <button type="button" class="btn btn-default btn-xs" data-type="v-right"><img class="glyphicon" src="{% static 'images/icons/align/v-right.png' %}"/></button>
+        </div>
+
+        <div id="distribute" class="btn-group btn-group-xs align-btn-group">
+          <button type="button" class="btn btn-default btn-xs" data-type="h-top"><img class="glyphicon" src="{% static 'images/icons/distribute/h-top.png' %}"/></button>
+          <button type="button" class="btn btn-default btn-xs" data-type="h-center"><img class="glyphicon" src="{% static 'images/icons/distribute/h-center.png' %}"/></button>
+          <button type="button" class="btn btn-default btn-xs" data-type="h-bottom"><img class="glyphicon" src="{% static 'images/icons/distribute/h-bottom.png' %}"/></button>
+
+          <button type="button" class="btn btn-default btn-xs" data-type="v-left"><img class="glyphicon" src="{% static 'images/icons/distribute/v-left.png' %}"/></button>
+          <button type="button" class="btn btn-default btn-xs" data-type="v-center"><img class="glyphicon" src="{% static 'images/icons/distribute/v-center.png' %}"/></button>
+          <button type="button" class="btn btn-default btn-xs" data-type="v-right"><img class="glyphicon" src="{% static 'images/icons/distribute/v-right.png' %}"/></button>
+        </div>
+
+      </div> <!-- /hidden -->
+
+    </div>
+
+<!--     <object id="wacomPlugin" type="application/x-wacomtabletplugin" width="0" height="0" style="position:absolute; left:0px; top:0px">
+      <param name="onload" value="pluginLoaded" />
+    </object> -->
+
+    <script src="{% static 'libs/break-on-access.js' %}"></script>
+    <script>WEB_SOCKET_SWF_LOCATION="{% static 'flashsocket/WebSocketMain.swf' %}";</script>
+
+    {% if useDebugFiles %}
+      <script data-main="{% static 'wetu-client/js/App' %}" src="{% static 'libs/require.js' %}" async></script>
+    {% else %}
+      <script src="{% static 'wetu-client/js/App-built.js' %}" async></script>
+    {% endif %}
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-113242328-3"></script>
+  <script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+
+   gtag('config', 'UA-113242328-3');
+  </script>
+
+  </body>
+</html>

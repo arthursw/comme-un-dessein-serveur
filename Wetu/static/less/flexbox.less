@@ -1,0 +1,118 @@
+.post .title {
+  /* text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.1); */
+  font-size: 140%;
+  font-weight: normal;
+  padding-bottom: 2px;
+  margin-bottom: 10px;
+  padding-top: 1em;
+  color: #333;
+}
+.post .action {
+  float: left;
+  width: 50%;
+  padding-top: 10px;
+  vertical-align: middle;
+}
+/* // Voting box for posts. */
+.post.vote-box {
+  text-align: center;
+  min-width: 60px;
+  float: left;
+  margin-left: -10px;
+  display: block;
+}
+.post.vote-box.ratings-enabled {
+  min-width: 150px;
+}
+.post.vote-box .count {
+  font-size: 180%;
+  font-weight: bold;
+  text-align: center;
+  margin: 5px 0px 5px 0px;
+  color: #505050;
+}
+.post.vote-box .mark {
+  height: 30px;
+  background-position: center;
+  /* margin-top: 10px; */
+  background-repeat: no-repeat;
+  cursor: pointer;
+  color: #e97200;
+  opacity: 0.9;
+}
+.post.vote-box .tip {
+  font-size: 13px;
+}
+.post.vote-box .off {
+  color: #5f5f5f;
+  opacity: 0.3;
+}
+.post.vote-box .ratings .vote.mark[data-type="bookmark"] {
+  margin-right: 20px;
+  margin-top: 0px;
+  opacity: 0.9;
+}
+.post.vote-box .ratings .vote.mark[data-type="bookmark"] .btn.btn-default {
+  color: #808080;
+  border-color: #eee;
+  justify-content: center;
+}
+/* // Voting box for comments. */
+.comment.vote-box {
+  text-align: center;
+  padding: 10px;
+  padding-right: 15px;
+  width: 35px;
+  float: left;
+  margin-left: -10px;
+  display: block;
+}
+.comment.vote-box .mark {
+  cursor: pointer;
+  color: #2F5B14;
+  opacity: 0.9;
+  width: 20px;
+  float: left;
+  vertical-align: middle;
+}
+.comment.vote-box .count {
+  width: 20px;
+  float: left;
+  font-size: small;
+  font-weight: bold;
+  text-align: center;
+  vertical-align: middle;
+  margin: 1px 0px 5px 0px;
+}
+.comment.vote-box .off {
+  opacity: 0.3;
+}
+.action-line {
+  width: 50%;
+  float: left;
+}
+.author-line {
+  width: 30%;
+  float: right;
+}
+.comment {
+  clear: left;
+}
+.comment .entry {
+  overflow-x: auto;
+  padding: 0px 10px 0px 10px;
+  margin-top: 0;
+  border-bottom: 1px solid #eeeeee;
+  margin-bottom: 20px;
+}
+.comment .entry hr {
+  border-top: 1px solid #e3e3e3;
+}
+.comment .post-info-line {
+  float: left;
+  margin-right: 10px;
+  color: #666666;
+}
+.comment .indent {
+  margin-left: 1.5em;
+}

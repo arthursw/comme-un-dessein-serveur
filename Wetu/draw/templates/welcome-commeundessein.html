@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+{% load static %}
+
+{# --- allauth --- #}
+
+{% load i18n %}
+{% load account %}
+{% load socialaccount %}
+
+<html lang="en">
+  <head>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- <link rel="shortcut icon" href="{% static 'images/icons/logo32.png' %}"> -->
+    <link rel="shortcut icon" href="{% static 'images/icons/icon.png' %}">
+
+    <title>Comme un Dessein</title>
+
+    <link href="{% static 'libs/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <link href="{% static 'css/welcome-commeundessein-styles.css' %}" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet"> -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=Mali|Open+Sans:400,700" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600&display=swap" rel="stylesheet">
+
+    <meta property="fb:app_id"          content="263330707483013" /> 
+    <meta property="og:type"            content="article" /> 
+    <meta property="og:url"             content="https://commeundessein.co/" /> 
+    <meta property="og:title"           content="Comme un Dessein" /> 
+    <meta property="og:description"     content="Comme un Dessein est un dispositif qui invite les citoyens à composer une œuvre collective et utopique, à l’aide d’une interface web connectée à un traceur vertical." /> 
+    <meta property="og:image"           content="http://commeundessein.co/static/images/CommeUnDessein1200x630.png" />
+    <meta property="og:image:width"     content="1200" />
+    <meta property="og:image:height"    content="630" />
+
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.min.js"
+      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+      crossorigin="anonymous">
+    </script>
+  </head>
+
+  <body class="cd-column cd-grow" data-authenticated="{{ request.user.is_authenticated }}">
+  
+    <!-- <div class="cd-container">
+      <img src="{% static 'images/CommeUnDessein.svg' %}">
+    </div> -->
+
+  <div id="fullpage" class="cd-welcome">
+    
+    <div class="section cd-green cd-center">
+        
+
+        
+
+        <div class="cd-login cd-row">
+          
+          <div class="cd-row cd-center cd-info"><a class="cd-center-text" href="info">En savoir plus</a></div>
+          
+          {% if not request.user.is_authenticated %}
+
+          <button id="login-button" class="btn btn-lg">
+            <!-- <img class="glyphicon" src="{% static 'images/icons/inverted/icones_connexion.png' %}"/> -->
+            <span class="glyphicon glyphicon-user"></span>
+            <span class="text">Se connecter</span>
+          </button>
+          
+          {% else %}
+
+          <button id="logout-button" class="btn btn-lg">
+            <!-- <img class="glyphicon" src="{% static 'images/icons/inverted/icones_connexion.png' %}"/> -->
+            <a href="{% url 'account_logout' %}" style='text-decoration: none; color: #373737;'>
+              <span class="glyphicon glyphicon-user"></span>
+              <span >Se déconnecter</span>
+            </a>
+          </button>
+
+
+          {% endif %}
+
+        </div>
+        
+        <!-- <div class="slide"> -->
+
+          <div class="cd-frame cd-column">
+            
+            <div class="cd-title">
+              <h1>Comme un Dessein</h1>
+              
+              <p class="subtitle"><em>« La démocratie participative fait-elle réellement émerger l’intérêt général ? »</em></p>
+
+              <p>L’installation <strong><em>Comme un dessein</em></strong> fait écho à cette question actuelle et invite le public à débattre et à proposer des dessins qui viendront progressivement composer une fresque collective grâce à un traceur vertical disposé dans l'espace public.</p>
+              
+            </div>
+            
+
+            <div id="intro-video" class="cd-column cd-center">
+
+              <iframe src="https://player.vimeo.com/video/240647274?color=ffe71e" width="800" height="450" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+              <p style="margin-top: 20px;" >Festival Maintenant - 10 au 15 octobre 2017 - <em>Théâtre du Vieux St-Etienne - Rennes (Fr)</em></p>
+
+            </div>
+            
+            <div class=" cd-row">
+              <button id="app-button" class="btn btn-lg">
+                <!-- <img class="glyphicon" src="{% static 'images/icons/inverted/icones_connexion.png' %}"/> -->
+                <span class="glyphicon glyphicon-arrow-right"></span>
+                <span class="text">Aller sur l'application</span>
+              </button>
+            </div>
+
+            <!-- 
+            <button id="" class="btn next-button">
+              <span class="glyphicon glyphicon-chevron-down"></span>
+            </button> -->
+
+          </div>
+
+
+    </div>
+
+    <div class="section cd-center">
+
+      <div>
+        <p><mark>Expérimentation :</mark></p>
+        <blockquote>
+        <p>« Internet favorise-t-il réellement le débat démocratique et la prise de décision collective ? »</p>
+        </blockquote>
+        <p>Fruit de la concertation commune, le projet tend à faire converger le public vers la création d’une œuvre qui conviendrait à tous et se présenterait donc comme le résultat de la volonté générale. Par le biais de l’Internet, le dispositif a vocation à favoriser les échanges et les interactions de manière à faire émerger dans l’espace public une proposition commune.</p>
+        <p>Le public sera donc invité à contribuer à l’élaboration d’une œuvre d’ensemble, qui sera simultanément réalisée sur un mur virtuel d’expression libre et restituée dans l’espace public grâce à un robot qui dessine. Chaque dessin proposé par les internautes sera soumis à validation communautaire à travers une plateforme de modération accessible à tous. Qu’il soit artiste, néophyte, observateur, critique ou simplement curieux, chacun devra décider, débattre et voter pour les dessins qui seront à garder ou à reléguer de manière à faire émerger l’œuvre finale.</p>
+        <p>Ainsi, la modération ne sera plus un facteur limitant mais bien un catalyseur de création collective qui, à force de censures et de compromis, et sans autorité centrale, générera un résultat de facto représentatif du processus démocratique.</p>
+        <p><mark>Source :</mark></p>
+        <ul>
+        <li><a href="https://commeundessein.co" target="_blank">commeundessein.co</a></li>
+        <li><a href="https://www.maintenant-festival.fr/2017/programmation/" target="_blank">Programmation du festival Maintenant 2017</a></li>
+        <li><a href="https://www.dropbox.com/s/ewbkjocxhdgx5vo/Comme%20un%20dessein%20-%20Dossier%20de%20pr%C3%A9sentation.pdf?dl=0" target="_blank">Dossier de présentation du projet</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+
+    <div class="section">
+    </div>
+
+  </div>
+  
+  <footer class="site-footer">
+        <div class="inner">
+            <section class="copyleft"><span><span class="copyleft">©</span> 2019 <a href="/">Indiens dans la ville</a></span></section>
+        </div>
+  </footer>
+  
+  <div id="background" class="hidden"></div>
+  <div id="login-form" class="hidden"></div>
+  <div id="select-edition" class="popup hidden">
+    <button class="close-button">x</button>
+    <h3>Edition en cours</h3>
+
+      <ul class="button-list cd-column editions">
+        <li><a href="/atelier-commun/">Atelier Commun</a></li>
+      </ul>
+
+    <h3>Editions passées</h3>
+      <ul class="button-list cd-column editions">
+        <li><a href="/nantes-maker-campus/">Nantes Maker Campus</a></li>
+        <li><a href="/safra-numeriques/">Safra'Numériques</a></li>
+        <li><a href="/tech-inn-vitre/">Tech Inn'Vitré</a></li>
+        <li><a href="/festival-maintenant/">Festival Maintenant</a></li>
+        <!-- <li><a href="/demo/">Démonstration</a></li> -->
+      </ul>
+  </div>
+
+
+    <!-- <script type="text/javascript" src="{% static 'libs/fullpage.js' %}"></script> -->
+    <!-- <script type="text/javascript" src="{% static 'libs/Chart.min.js' %}"></script> -->
+
+    <script src="{% static 'js/welcome-commeundessein.js' %}"></script>
+  </body>
+</html>

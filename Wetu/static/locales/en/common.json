@@ -1,0 +1,17 @@
+{
+	"Welcome to Comme Un Dessein": "Welcome to Comme un Dessein !",
+	"welcome message": "Comme un dessein is a participative piece created by the french collective IDLV (Indiens dans la Ville). With the help of a simple web interface and a monumental plotter, everyone can submit a drawing which takes part of a larger pictural composition, thus compose a collective utopian artwork.",
+	"Participate !": "Participate !",
+	"Just visit": "Just visit",
+	"Sign in": "Sign in",
+	"Sign up": "Sign up",
+	"You are logged as username": "You are logged as {{username}}",
+	"You successfully voted, the drawing will be rejected": "You successfully voted, the drawing will be rejected in {{duration}} if nobody cancels its vote!",
+	"You successfully voted, the drawing will be validated": "You successfully voted, the drawing will be validated in {{duration}} if nobody cancels its vote!",
+    "key": "{{what}} is {{how}}",
+    "You can zoom in to draw more easily": "Tip: you can zoom in to draw more easily",
+	"Vote for this drawing on Comme un Dessein": "Vote for \"{{drawing}}\" by {{author}} on Comme un Dessein !",
+	"The image is too big to fit in one drawing": "The image is too big to fit in one drawing. Click on the image part that you want to trace.",
+	"The image is too big": "The image is too big to be traced automatically. Please reduce its size before tracing it.",
+	"You cannot trace automatically an image from an URL": "You cannot trace automatically an image from an URL. Please make sure the image copyright allows reusing the image, then download the image on your computer and choose the image from your computer."
+}

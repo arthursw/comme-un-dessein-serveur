@@ -61,19 +61,21 @@ target/
 
 bin/
 include/
-CommeUnDessein/static/images/sources/
-CommeUnDessein/media/
-CommeUnDessein/js/*.map
-CommeUnDessein/static/libsBckp/
-CommeUnDessein/static/docs/
-CommeUnDessein/static/node_modules/
-CommeUnDessein/static/comme-un-dessein-client/
-CommeUnDessein/CommeUnDessein/static/
-CommeUnDessein/rasterizer/
-CommeUnDessein/static/tipibot-controller-gui-old/
-CommeUnDessein/static/tipibot-controller-gui/
-CommeUnDessein/static/drawings/
-CommeUnDessein/draw/static/drawings/
+Wetu/static/images/sources/
+Wetu/media/
+Wetu/js/*.map
+Wetu/static/libsBckp/
+Wetu/static/docs/
+Wetu/static/videos/
+Wetu/static/node_modules/
+Wetu/static/comme-un-dessein-client/
+Wetu/Wetu/static/
+Wetu/Wetu/media/
+Wetu/rasterizer/
+Wetu/static/tipibot-controller-gui-old/
+Wetu/static/tipibot-controller-gui/
+Wetu/static/drawings/
+Wetu/draw/static/drawings/
 
 .DS_Store
 
